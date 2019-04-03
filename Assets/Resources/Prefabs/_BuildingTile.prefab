@@ -177,7 +177,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1232357405504566}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.3, y: 0.13, z: 14.02}
+  m_LocalPosition: {x: 5.3, y: 0.13, z: 15.84}
   m_LocalScale: {x: 5, y: 0.5, z: 5}
   m_Children:
   - {fileID: 224884329058575278}
@@ -524,7 +524,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfa817f348654c24b92faa5fa96683d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TurretParent: {fileID: 0}
+  TurretParentObject: {fileID: 0}
   isBuiltOn: 0
 --- !u!114 &114793964512208640
 MonoBehaviour:

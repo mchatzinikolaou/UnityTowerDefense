@@ -11,13 +11,12 @@ public struct Building
 
 
 
-    
 
-    public Building(string Name,Object Prefab,bool IsAvailable)
+    public Building(string name,Object prefab,bool isAvailable)
     {
-        this.name=Name;
-        this.prefab=Prefab;
-        this.isAvailable=IsAvailable;
+        this.name= name;
+        this.prefab= prefab;
+        this.isAvailable= isAvailable;
     }
 
 

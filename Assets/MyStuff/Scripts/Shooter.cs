@@ -17,12 +17,6 @@ public class Shooter : MonoBehaviour {
         StartCoroutine("Shooting");
     }
 	
-	// Update is called once per frame
-	void FixedUpdate () {
-        
-    }
-
-
     IEnumerator Shooting()
     {
         while (true) {
@@ -33,15 +27,6 @@ public class Shooter : MonoBehaviour {
             yield return new WaitForSeconds(1.0f/ShotsPerSecond);
         }
     }
-    
-
-    //scan for the next target to shoot.
-
-    /*
-     * Here we can implement an aggro system, to rank each enemy 
-     * and put one in the top to be shot.
-     * 
-     */
 
     void ShootAtTarget()
     {
@@ -52,8 +37,7 @@ public class Shooter : MonoBehaviour {
         newBullet.transform.SetParent(transform); // needs to be of type transform
         newBullet.SetActive(true);
     }
-
-  
+    
 
     //Find all enemies, check who are in range and return the next.
     bool FindNextTarget()
@@ -107,5 +91,4 @@ public class Shooter : MonoBehaviour {
        return Vector3.Distance(this.transform.position,other.transform.position);
     }
 
-    
 }

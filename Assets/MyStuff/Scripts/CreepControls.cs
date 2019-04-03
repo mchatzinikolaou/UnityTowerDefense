@@ -8,34 +8,28 @@ public class CreepControls : MonoBehaviour
 {
 
     NavMeshAgent agent;
-    GameObject Destination;
-    GameObject slowEffects;
-    float curr_SlowPercentage;
-    float baseSpeed;
-    float maxHP;
-    float currentHP;
-    GameObject AnimationEffects;
-    public bool isDead;
+    GameObject Destination,slowEffects,AnimationEffects;
+    GameManagement managerScript;
+
+    float curr_SlowPercentage, baseSpeed,maxHP,currentHP;
+    public bool isDead, isSlowed;
     public int goldDrop;
     int damage;
-    bool isSlowed;
-
-
-
-
+    
 
     // Use this for initialization
     void Start()
     {
+        goldDrop=5;
         isDead=false;
         isSlowed = false;
-        //AnimationEffects=GameObject.GetComponent<>();
         InitiateAgent();
         InitiateSpeedSettings();
         Initiate_VFX();
         maxHP = 100;
         currentHP=maxHP;
         damage=1;
+        managerScript=GameObject.FindWithTag("GameController").GetComponent<GameManagement>();
     }
 
     void FixedUpdate()
@@ -47,17 +41,17 @@ public class CreepControls : MonoBehaviour
 
     void CheckIfDead()
     {
-        
         if (currentHP <= 0) {
-
-            //AnimationEffects.PlayDeathAnimation();
-            //StartCoroutine("WaitAndDestroy"); 
-            isDead=true;
-            Destroy(gameObject);
+            Die();
         }
     }
 
-
+    void Die()
+    {
+        managerScript.gainGold(goldDrop);
+        isDead = true;
+        Destroy(gameObject); //SetActive(false) could also wotlk.
+    }
 
     //Get the biggest slow value from the turrets around you and get slowed by it.
     public void Slow(float percentage)
@@ -80,23 +74,7 @@ public class CreepControls : MonoBehaviour
         //StopParticle effects.
         slow_VFX(false);
     }
-
-
-
-    //private void OnTriggerStay(Collider other)
-    //{
-    //    if (other.gameObject.CompareTag("Slowing Turret"))
-    //    {
-    //        Slow(other.gameObject.GetComponent<SlowTower>().slowPercentage);
-
-    //    }
-    //}
-
-
-    ///*
-    // * Whenever a creep escapes a slow AoE , the effect is released.
-    // */
-
+    
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.CompareTag("Slowing Turret"))
@@ -104,12 +82,14 @@ public class CreepControls : MonoBehaviour
             ReleaseSlow();
         }
     }
-
-
+    
     public float getHealthPercentage()
     {
         return currentHP/maxHP;
     }
+    
+
+    /*GameStats.*/
 
     public void TakeDamage(float indamage)
 
@@ -118,27 +98,19 @@ public class CreepControls : MonoBehaviour
         Debug.Log("New Hp: "+currentHP);
     }
 
+    public int getDamage()
+    {
+        return damage;
+    }
     
-    void Initiate_VFX()
-    {
-        //CHANGE THIS HERE TO FIND PARTICULAR CHILD
-        slowEffects = this.transform.GetChild(0).gameObject;
-        //CHANGE THIS HERE TO FIND PARTICULAR CHILD
-        slow_VFX(false);
-    }
-
-    void slow_VFX(bool show)
-    {
-        slowEffects.SetActive(show);
-    }
+    /* Agent settings.*/
 
     void InitiateAgent()
     {
         agent = gameObject.GetComponent<NavMeshAgent>();
         setAgentDestination();
     }
-
-    //Set the destination to the homebase.
+    
     void setAgentDestination()
     {
         Destination = GameObject.FindWithTag("Finish");
@@ -156,8 +128,21 @@ public class CreepControls : MonoBehaviour
         return agent.speed/baseSpeed;
     }
 
-    public int getDamage()
+
+    /* Animation settings */
+         
+    void Initiate_VFX()
     {
-        return damage;
+        //CHANGE THIS HERE TO FIND PARTICULAR CHILD
+        slowEffects = this.transform.GetChild(0).gameObject;
+        //CHANGE THIS HERE TO FIND PARTICULAR CHILD
+        slow_VFX(false);
     }
+
+    void slow_VFX(bool show)
+    {
+        slowEffects.SetActive(show);
+    }
+
+
 }
