@@ -78,12 +78,11 @@ public class buildControls : MonoBehaviour {
                             newBuilding.GetComponent<SlowTower>().DropAllSlows();
                         }
 
+                        GoldAndStuff.PlayerGold += newBuilding.GetComponent<Tower_Economy>().SellValue();
                         Destroy(newBuilding);
                         PossibleTurrets[i].isAvailable = true;
                         isBuiltOn = false;
-
-
-                        //Get player manager and add to it the building's cost,or some logic .
+                    
 
 
                         break;

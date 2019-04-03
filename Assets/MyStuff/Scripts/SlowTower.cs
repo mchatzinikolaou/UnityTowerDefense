@@ -10,9 +10,9 @@ using UnityEngine;
         GameObject[] EnemyTable;
     
 
-        void Start()
+        protected override void Start()
         {
-
+            base.Start();
             if (BasicSlow == 0.0f) BasicSlow = 0.2f;
             if (BasicRange == 0.0f) BasicRange = 20;
             if (MaxSlow==0.0f) MaxSlow = 0.8f;

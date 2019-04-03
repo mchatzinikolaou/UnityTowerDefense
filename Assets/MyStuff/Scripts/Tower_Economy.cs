@@ -19,7 +19,7 @@ using UnityEngine;
         //made this protected to be accessible by other turrets
         protected int maxLevel,CurrentLevel;
 
-        void Start()
+        protected virtual void Start()
         {
             CurrentLevel = 1;
             maxLevel = 3;
@@ -64,6 +64,8 @@ using UnityEngine;
     
         public int SellValue()
         {
+            Debug.Log("Tower cost: "+TowerCost);
+            Debug.Log("Level: "+ CurrentLevel);
             return (int) ( TowerCost* (1 + ((float)CurrentLevel-1)/3.0f));
         }
     }
