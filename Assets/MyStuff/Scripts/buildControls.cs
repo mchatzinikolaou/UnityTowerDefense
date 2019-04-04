@@ -5,89 +5,86 @@ using UnityEngine.UI;
 
 
 public class buildControls : MonoBehaviour {
+
+    GameObject[] AvailableTurrets;
+    GameObject BuiltTurret;
     
-        Building[] PossibleTurrets;
-        public Transform TurretParentObject;
-        public bool isBuiltOn;
-        GameObject newBuilding;
-        GameManagement GoldAndStuff;
+    public Transform TurretParentObject;
+    public bool isBuiltOn;
+    GameManagement GoldAndStuff;
 
-        void Start()
-        {
-            GoldAndStuff = GameObject.FindWithTag("GameController").GetComponent<GameManagement>();
-            Object[] prefabs = Resources.LoadAll("Prefabs/Buildings");
-        
-            isBuiltOn =false;
-
-            PossibleTurrets=new Building[prefabs.Length];
-
-            for (int i=0;i<prefabs.Length;i++)
-            {
-                PossibleTurrets[i]=new Building(prefabs[i].name,prefabs[i],true);
-            }
-        }
+    void Start()
+    {
+        GoldAndStuff = GameObject.FindWithTag("GameController").GetComponent<GameManagement>();
+                 
+        isBuiltOn =false;
+    }
 	
-        public void BuildingCreate(string BuildingName)
+    public void BuildingCreate(string BuildingName)
+    {
+        if (!isBuiltOn)
         {
-            if (!isBuiltOn)
+            for (int i = 0; i < AvailableTurrets.Length; i++)
             {
-                for (int i = 0; i < PossibleTurrets.Length; i++)
-                {
-                    //When the right building is matched.
-                    if (PossibleTurrets[i].name.Equals(BuildingName)) { 
-                        GameObject Building= PossibleTurrets[i].prefab as GameObject;
-                        int Gold= GoldAndStuff.PlayerGold;
-                        int TowerCost= Building.GetComponent<Tower_Economy>().TowerCost;
+                //When the right building is matched.
+                if (AvailableTurrets[i].name.Equals(BuildingName)) { 
+                    int Gold= GoldAndStuff.PlayerGold;
+                    int TowerCost= AvailableTurrets[i].GetComponent<Tower_Economy>().TowerCost;
 
-                        if (TowerCost > Gold)
-                        {
-                            Debug.Log("Not enough gold!");
-                            return;
-                        }
-
-                        else
-                        {
-                            newBuilding = Instantiate(Building, transform.position, Quaternion.identity);
-                            newBuilding.transform.SetParent(TurretParentObject);
-                            PossibleTurrets[i].isAvailable = false;
-                            isBuiltOn = true;
-                            GoldAndStuff.PlayerGold-= TowerCost;
-                        }
-                    break;
-                    }
-                }
-            }
-        }
-
-        public void DeleteBuilding()
-        {
-
-            if (isBuiltOn)
-            {
-                for (int i = 0; i < PossibleTurrets.Length; i++)
-                {
-
-                    if (PossibleTurrets[i].isAvailable == false)
+                    if (TowerCost > Gold)
                     {
-                    
-                    /*
-                     * Use delegates later
-                     */
-                     if (newBuilding.CompareTag("Slowing Turret"))
-                        {
-                            newBuilding.GetComponent<SlowTower>().DropAllSlows();
-                        }
-
-                        GoldAndStuff.PlayerGold += newBuilding.GetComponent<Tower_Economy>().SellValue();
-                        Destroy(newBuilding);
-                        PossibleTurrets[i].isAvailable = true;
-                        isBuiltOn = false;
-                    
-
-
-                        break;
+                        Debug.Log("Not enough gold!");
+                        return;
                     }
+
+                    else
+                    {
+                        BuiltTurret = Instantiate(AvailableTurrets[i], transform.position, Quaternion.identity);
+                        BuiltTurret.transform.SetParent(TurretParentObject);
+                        isBuiltOn = true;
+                        GoldAndStuff.PlayerGold-= TowerCost;
+                    }
+                break;
                 }
             }
         }
+    }
+
+    public void DeleteBuilding()
+    {
+
+        if (isBuiltOn)
+        {
+                
+                    if (BuiltTurret.CompareTag("Slowing Turret"))
+                    {
+                        BuiltTurret.GetComponent<SlowTower>().DropAllSlows();
+                    }
+                    GoldAndStuff.PlayerGold += BuiltTurret.GetComponent<Tower_Economy>().SellValue();
+                    Destroy(BuiltTurret);
+                    isBuiltOn = false;
+        }
+    }
+
+
+    //Gets called from the game manager and loads every turret in the
+    //available list.
+    public void SetAvailableTurrets(Object[] Turrets)
+    {
+        AvailableTurrets=new GameObject[Turrets.Length];
+        for (int i=0;i< Turrets.Length;i++)
+        {
+            AvailableTurrets[i] = Turrets[i] as GameObject;
+                
+        }
+    }
+
+    public void UpgradeTurret()
+    {
+        if (BuiltTurret == null){
+            Debug.Log("Trying to upgrade a non-existing turret!!");
+            return;
+        }
+        BuiltTurret.GetComponent<Tower_Economy>().Upgrade();
+    }
 }

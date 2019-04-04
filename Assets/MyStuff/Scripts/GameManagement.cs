@@ -8,13 +8,15 @@ public class GameManagement : MonoBehaviour {
     int PlayerHP;
     public int PlayerGold;
     int GoldOverTime;
-
+    Object[] PossibleTurrets;
     public Text goldText , DamageTakenText;
-
     public static int GameSpeed;
+
 
     // Use this for initialization
     void Start () {
+        LoadAndSetAvailableTurrets();
+
         PlayerHP=100;
         GameSpeed =1;
         PlayerGold=0;
@@ -23,6 +25,16 @@ public class GameManagement : MonoBehaviour {
         ModifyDamageText();
     }
 	
+    //Locate all building tiles in the game and pass the Turrets
+    //as possible prefabs to be loaded.
+    void LoadAndSetAvailableTurrets()
+    {
+        PossibleTurrets=Resources.LoadAll("Prefabs/Buildings");
+        GameObject[] BuildingBases = GameObject.FindGameObjectsWithTag("BuildingBase");
+        foreach(GameObject Base in BuildingBases){
+            Base.GetComponent<buildControls>().SetAvailableTurrets(PossibleTurrets);
+        }
+    }
 
     IEnumerator GiveGoldOverTime()
     {

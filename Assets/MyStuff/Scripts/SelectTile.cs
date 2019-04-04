@@ -3,60 +3,65 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SelectTile : MonoBehaviour {
-    GameObject SelectedTile;
 
-    
+    GameObject SelectedTile;
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            //Close the previous window.
-            //if (SelectedTile != null) { 
-            //    SelectedTile.transform.GetChild(0).gameObject.SetActive(false);
-            //}
+        if (Input.GetMouseButtonDown(0)){
 
             RaycastHit hitInfo = new RaycastHit();
             bool hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo);
 
-            if (hit)
-            {
-                //If you hit the same object, do nothing.
-                if (hitInfo.transform.gameObject==SelectedTile)
-                {
+            if (hit){
+
+                GameObject HitObject= hitInfo.transform.gameObject;
+                //If you hit the previous object, do nothing.
+                if (HitObject == SelectedTile){
                     return;
                 }
-                else
-                {
+                else{
                     //Else, close the previous window.
                     if (SelectedTile != null) {
-
-                        Transform oldCanvas= SelectedTile.transform.Find("Canvas");
-
-                        if (oldCanvas != null) { 
-                           oldCanvas.gameObject.SetActive(false);
+                        Debug.Log("Selected "+SelectedTile.transform);
+                        //For all it's children components Taged as GUI , close them.
+                        foreach (Transform child in SelectedTile.transform){
+                            Debug.Log("Child tag: "+child.tag);
+                            if (child.tag == "GUI"){
+                                Debug.Log("Deactivating Child tag: " + child.tag);
+                                child.gameObject.SetActive(false);
+                            }
                         }
                     }
                 }
-                
-                SelectedTile =hitInfo.transform.gameObject;
-                Debug.Log("Hit " + hitInfo.transform.gameObject.name);
 
-                if (SelectedTile.tag == "BuildingBase")
-                {
-                    //This here fetches the UI panel;
 
-                    //This is the canvas
-                    SelectedTile.transform.Find("Canvas").gameObject.SetActive(true);
+                //Now we program the new selected tile's GUI.
+                SelectedTile=HitObject;
+
+                if (SelectedTile.tag == "BuildingBase"){
+                       buildControls slotInfo=SelectedTile.GetComponent<buildControls>();
+
+                    //If there is a turret on this building tile...
+                    if (slotInfo.isBuiltOn){
+                        Debug.Log("it is built");
+                        GameObject TowerGUI= slotInfo.transform.GetChild(1).gameObject;
+                        TowerGUI.SetActive(true);
+                        if(!TowerGUI.name.Equals("TowerGUI")) Debug.Log("Name does not equal TowerGUI!");
+
+                    }
+                    else {
+
+                        Debug.Log("NOT built");
+                        GameObject BuildingGUI = slotInfo.transform.GetChild(0).gameObject;
+                        BuildingGUI.SetActive(true);
+                        if (!BuildingGUI.name.Equals("BuildingGUI")) Debug.Log("Name does not equal BuildingGUI!");
+
+                    }
                 }
-                else
-                {
-                    //Put the rest of the tiles here, if any...
-                }
-            }
-            else
-            {
+
             }
         }
     }
 }
+

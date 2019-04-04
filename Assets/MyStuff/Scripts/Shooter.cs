@@ -2,18 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Shooter : MonoBehaviour {
+public class Shooter : Tower_Economy {
 
-    public float maxRange;
+    public float MaxRange;
     GameObject Target;
     GameObject[] EnemyTable;
     public GameObject Projectile;
     float firingRate;
     public float ShotsPerSecond;
 
-	// Use this for initialization
-	void Start () {
-
+    // Use this for initialization
+    protected override void Start () {
+        base.Start();
         StartCoroutine("Shooting");
     }
 	
@@ -30,7 +30,7 @@ public class Shooter : MonoBehaviour {
 
     void ShootAtTarget()
     {
-        if(Vector3.Distance(transform.position,Target.transform.position)>maxRange) return;
+        if(Vector3.Distance(transform.position,Target.transform.position)> MaxRange) return;
 
         GameObject newBullet=Instantiate(Projectile, transform.position, Quaternion.Euler(-90, 0, 0));
         newBullet.GetComponent<FireballBehaviour>().Target=Target;
@@ -89,6 +89,28 @@ public class Shooter : MonoBehaviour {
     float calculateDistanceTo(GameObject other)
     {
        return Vector3.Distance(this.transform.position,other.transform.position);
+    }
+
+    public override void Upgrade()
+    {
+        int GoldCost = getUpgradeCost();
+        if (GoldAndStuff.PlayerGold < GoldCost)
+        {
+            Debug.Log("Not enough money");
+            return;
+        }
+        if (CurrentLevel == maxLevel)
+        {
+            Debug.Log("Max level already reached!");
+            return;
+        }
+
+        CurrentLevel++;
+
+        Debug.Log("Shooting Tower upgrade does nothing for now.");
+        //currentRange = BasicRange + (MaxRange - BasicRange) * ((float)CurrentLevel / (float)maxLevel);
+        //Debug.Log("New Slow : " + slowPercentage + "\nNew Range: " + currentRange);
+        //GoldAndStuff.PlayerGold -= GoldCost;
     }
 
 }

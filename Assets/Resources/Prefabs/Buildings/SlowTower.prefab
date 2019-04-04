@@ -156,7 +156,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08d544c74a076ec4a9f87149b1a74843, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TowerCost: 10
+  TowerCost: 2
   BasicSlow: 50
   MaxSlow: 90
   BasicRange: 90
