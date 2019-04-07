@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4990164432462680}
   - component: {fileID: 114416742266759462}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: ShootingTower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -409,6 +409,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TowerCost: 0
+  GUI: {fileID: 0}
 --- !u!114 &114455216240009754
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -434,7 +435,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33890d1da9c9962408241ff755c3f9da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxRange: 13.78
+  TowerCost: 0
+  GUI: {fileID: 0}
+  MaxRange: 0
   Projectile: {fileID: 1729480632622276}
   ShotsPerSecond: 1
 --- !u!135 &135851279666178732

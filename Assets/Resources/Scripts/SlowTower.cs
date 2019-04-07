@@ -9,6 +9,7 @@ public class SlowTower : Tower_Economy
     float slowPercentage,currentRange ;
     GameObject[] EnemyTable;
 
+
     protected override void Start()
     {
         base.Start();
@@ -95,9 +96,5 @@ public class SlowTower : Tower_Economy
         Debug.Log("New Slow : "+slowPercentage + "\nNew Range: "+ currentRange);
         GoldAndStuff.PlayerGold-=GoldCost;
     }
-
-
     
-
-
 }

@@ -11,8 +11,6 @@ public class GhostBehaviour : MonoBehaviour
 
     public Material AvailableColour,UnavailableColour;
     Material CurrentColour;
-    
-    float Threshold = 1.0f;
 
     //When the ghost is spawned, Subtract the cost from the player's available gold.
     void Start()
