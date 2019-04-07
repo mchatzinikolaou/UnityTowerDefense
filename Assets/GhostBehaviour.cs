@@ -11,21 +11,19 @@ public class GhostBehaviour : MonoBehaviour
 
     public Material AvailableColour,UnavailableColour;
     Material CurrentColour;
-    GameManagement PlayerEconomy;
-    public Terrain map;
+    
     float Threshold = 1.0f;
 
     //When the ghost is spawned, Subtract the cost from the player's available gold.
     void Start()
     {
         ConstructionAvailable=false;
-        PlayerEconomy =GameObject.FindWithTag("GameController").GetComponent<GameManagement>();
-        PlayerEconomy.PlayerGold -= ReplacementTurret.GetComponent<Tower_Economy>().TowerCost;
     }
 
     //Destroy the ghost and give the player the money back.
     void CancelBuild()
     {
+        GameManagement PlayerEconomy = GameObject.FindWithTag("GameController").GetComponent<GameManagement>();
         PlayerEconomy.PlayerGold += ReplacementTurret.GetComponent<Tower_Economy>().TowerCost;
         Destroy(this.gameObject);
     }
@@ -95,5 +93,21 @@ public class GhostBehaviour : MonoBehaviour
             }
     }
 
-    
+    public void Spawn()
+    {
+
+        GameManagement PlayerEconomy = GameObject.FindWithTag("GameController").GetComponent<GameManagement>();
+        int Cost= ReplacementTurret.GetComponent<Tower_Economy>().TowerCost;
+
+        if (Cost > PlayerEconomy.PlayerGold) {
+            Debug.Log("Not enough money!");
+            return;
+        }
+
+
+
+        PlayerEconomy.PlayerGold -= Cost;
+        Instantiate(this, transform.position, transform.rotation).gameObject.SetActive(true);
+
+    }
 }
