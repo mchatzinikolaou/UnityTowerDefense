@@ -64,13 +64,10 @@ public class Tower_Economy : MonoBehaviour {
         return (int) ( TowerCost* (1 + ((float)CurrentLevel-1)/3.0f));
     }
 
-    public void Sell()
+    public virtual void Sell()
     {
         GoldAndStuff.PlayerGold+= SellValue();
-        
-        Debug.Log("Selling");
         ToggleGUI(false);
-        Destroy(this.gameObject);
     }
     
 

@@ -3,9 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Spawning { 
-
-
 
 public class Spawner : MonoBehaviour {
 
@@ -17,10 +14,7 @@ public class Spawner : MonoBehaviour {
 
 
     // Use this for initialization
-        void Start () {
-            spawnCreeps(creep);
-
-        }
+        
             
         //Spawn a creep Wave desctibed in "creeps" list.
         void spawnCreepWave(IList<GameObject> creeps)
@@ -31,16 +25,15 @@ public class Spawner : MonoBehaviour {
                 }
         }
 
-        private void spawnCreeps(GameObject creep)
-        {
-            for(int i = 0; i < 3; i++) { 
-                Instantiate(creep, getRandomSpawnPoint(), Quaternion.identity).SetActive(true);
+       
 
-            }
+        public void spawnCreep(GameObject creep)
+        {
+            Instantiate(creep, getRandomSpawnPoint(), Quaternion.identity).SetActive(true);
         }
 
         //Return a random spawn point in the spawining area, which must be cubic.
-        Vector3 getRandomSpawnPoint()
+    Vector3 getRandomSpawnPoint()
         {
                 //Generate the position
                 float x_center = spawnArea.transform.position.x;
@@ -61,4 +54,4 @@ public class Spawner : MonoBehaviour {
         }
        }
 
-    }
+    

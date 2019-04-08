@@ -92,10 +92,8 @@ public class CreepControls : MonoBehaviour
     /*GameStats.*/
 
     public void TakeDamage(float indamage)
-
     {
         currentHP -= indamage;
-        Debug.Log("New Hp: "+currentHP);
     }
 
     public int getDamage()

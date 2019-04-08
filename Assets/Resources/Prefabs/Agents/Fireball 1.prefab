@@ -115,7 +115,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flatDamage: 20
-  projectileSpeed: 15
+  projectileSpeed: 30
   Target: {fileID: 0}
 --- !u!135 &135354363723176914
 SphereCollider:

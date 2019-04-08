@@ -113,4 +113,12 @@ public class Shooter : Tower_Economy {
         //GoldAndStuff.PlayerGold -= GoldCost;
     }
 
+    public override void Sell()
+    {
+        base.Sell();
+        Destroy(this.gameObject);
+    }
+
+
+
 }

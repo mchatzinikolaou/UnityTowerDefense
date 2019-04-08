@@ -57,6 +57,14 @@ public class SlowTower : Tower_Economy
         }
     }
 
+    public override void Sell()
+    {
+        base.Sell();
+        DropAllSlows();
+        Destroy(this.gameObject);
+    }
+
+
     public float getSlowPercentage()
     {
         return slowPercentage;
