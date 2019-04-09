@@ -47,8 +47,7 @@ public class Shooter : Tower_Economy {
 
         //If we couldn't find an enemy to target...
         if (EnemyTable.Length==0)
-        {
-            //Debug.Log("This turret : "+this.gameObject.GetInstanceID()+" found no more enemies");
+        { 
             return false;
         }
 
@@ -74,7 +73,6 @@ public class Shooter : Tower_Economy {
             }
         }
         Target=closestEnemy;
-        //Debug.Log("Nearest enemy is :"+closestEnemy.GetInstanceID());
         return true;
     }
     
@@ -108,9 +106,6 @@ public class Shooter : Tower_Economy {
         CurrentLevel++;
 
         Debug.Log("Shooting Tower upgrade does nothing for now.");
-        //currentRange = BasicRange + (MaxRange - BasicRange) * ((float)CurrentLevel / (float)maxLevel);
-        //Debug.Log("New Slow : " + slowPercentage + "\nNew Range: " + currentRange);
-        //GoldAndStuff.PlayerGold -= GoldCost;
     }
 
     public override void Sell()

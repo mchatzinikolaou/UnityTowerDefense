@@ -4,8 +4,13 @@ using UnityEngine;
 using UnityEngine.AI;
 
 
-public class CreepControls : MonoBehaviour
+
+
+
+
+public class CreepControls : MonoBehaviour 
 {
+    
 
     NavMeshAgent agent;
     GameObject Destination,slowEffects,AnimationEffects;
@@ -15,7 +20,7 @@ public class CreepControls : MonoBehaviour
     public bool isDead, isSlowed;
     public int goldDrop;
     int damage;
-    
+    public int Strength;
 
     // Use this for initialization
     void Start()
@@ -50,7 +55,7 @@ public class CreepControls : MonoBehaviour
     {
         managerScript.gainGold(goldDrop);
         isDead = true;
-        Destroy(gameObject); //SetActive(false) could also wotlk.
+        Destroy(gameObject); 
     }
 
     //Get the biggest slow value from the turrets around you and get slowed by it.

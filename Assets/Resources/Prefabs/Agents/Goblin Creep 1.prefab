@@ -267,7 +267,7 @@ GameObject:
   - component: {fileID: 114032783223073458}
   - component: {fileID: 195094486438318360}
   m_Layer: 0
-  m_Name: Goblin Creep
+  m_Name: Goblin Creep 1
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2412,7 +2412,7 @@ MonoBehaviour:
   isDead: 0
   isSlowed: 0
   goldDrop: 5
-  Strength: 1
+  Strength: 3
 --- !u!114 &114057463385658518
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2657,7 +2657,7 @@ SkinnedMeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: ba9ed8f46aa841c46a5cabb9f8df427f, type: 2}
+  - {fileID: 2100000, guid: 42e26e838cb21e944aa7de2aae4edefc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2752,7 +2752,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.47
-  m_Speed: 15
+  m_Speed: 20
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 900
