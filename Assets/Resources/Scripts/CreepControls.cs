@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
 
 
@@ -16,24 +14,25 @@ public class CreepControls : MonoBehaviour
     GameObject Destination,slowEffects,AnimationEffects;
     GameManagement managerScript;
     
-    float curr_SlowPercentage, baseSpeed,maxHP,currentHP;
+    float curr_SlowPercentage, baseSpeed,currentHP;
+
     public bool isDead, isSlowed;
     public int goldDrop;
-    int damage;
+    public int damage, maxHP;
     public int Strength;
 
     // Use this for initialization
     void Start()
     {
+        baseSpeed=gameObject.GetComponent<NavMeshAgent>().speed;
         goldDrop=5;
         isDead=false;
         isSlowed = false;
         InitiateAgent();
         InitiateSpeedSettings();
         Initiate_VFX();
-        maxHP = 100;
+        if(maxHP==0) maxHP=100;
         currentHP=maxHP;
-        damage=1;
         managerScript=GameObject.FindWithTag("GameController").GetComponent<GameManagement>();
     }
 
@@ -128,7 +127,7 @@ public class CreepControls : MonoBehaviour
 
     public float getSpeedPercentage()
     {
-        return agent.speed/baseSpeed;
+        return (agent.speed / baseSpeed);
     }
 
 

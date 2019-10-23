@@ -1,13 +1,5 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-
-
-
-
-
-
 
 
 public class Spawner : MonoBehaviour {
@@ -16,7 +8,6 @@ public class Spawner : MonoBehaviour {
     //The area which we will spawn the monsters in.
         public BoxCollider spawnArea;
         public GameObject creep;
-        //IList<GameObject> wave1;
 
 
     // Use this for initialization

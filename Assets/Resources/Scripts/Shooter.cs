@@ -8,24 +8,31 @@ public class Shooter : Tower_Economy {
     GameObject Target;
     GameObject[] EnemyTable;
     public GameObject Projectile;
-    float firingRate;
     public float ShotsPerSecond;
+    AudioSource shootingFX;
 
     // Use this for initialization
     protected override void Start () {
         base.Start();
         StartCoroutine("Shooting");
+        shootingFX=gameObject.GetComponent<AudioSource>();
     }
 	
     IEnumerator Shooting()
     {
         while (true) {
             //If there are enemies within range...
-            if(FindNextTarget()){ 
+            if(FindNextTarget()){
                 ShootAtTarget();
             }
             yield return new WaitForSeconds(1.0f/ShotsPerSecond);
         }
+    }
+
+    IEnumerator PlayAudioClip()
+    { 
+        shootingFX.Play();
+        yield return null;
     }
 
     void ShootAtTarget()
@@ -34,8 +41,9 @@ public class Shooter : Tower_Economy {
 
         GameObject newBullet=Instantiate(Projectile, transform.position, Quaternion.Euler(-90, 0, 0));
         newBullet.GetComponent<FireballBehaviour>().Target=Target;
-        newBullet.transform.SetParent(transform); // needs to be of type transform
+        newBullet.transform.SetParent(transform);
         newBullet.SetActive(true);
+        StartCoroutine("PlayAudioClip");
     }
     
 
@@ -92,7 +100,7 @@ public class Shooter : Tower_Economy {
     public override void Upgrade()
     {
         int GoldCost = getUpgradeCost();
-        if (GoldAndStuff.PlayerGold < GoldCost)
+        if (GoldAndStuff.PlayerGold < GoldCost * CurrentLevel)
         {
             Debug.Log("Not enough money");
             return;
@@ -103,9 +111,11 @@ public class Shooter : Tower_Economy {
             return;
         }
 
+        
+        ShotsPerSecond+=1;
+        MaxRange+= (1/2)*MaxRange;
+        GoldAndStuff.PlayerGold -= GoldCost*CurrentLevel;
         CurrentLevel++;
-
-        Debug.Log("Shooting Tower upgrade does nothing for now.");
     }
 
     public override void Sell()

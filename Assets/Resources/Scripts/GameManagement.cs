@@ -11,10 +11,12 @@ public class GameManagement : MonoBehaviour {
     Object[] PossibleTurrets;
     public Text goldText , DamageTakenText;
     public static int GameSpeed;
+    GameObject Wavelogic;
 
 
     // Use this for initialization
     void Start () {
+        Wavelogic=GameObject.FindWithTag("WaveController");
         LoadAndSetAvailableTurrets();
         PlayerHP=100;
         GameSpeed =1;
@@ -48,9 +50,51 @@ public class GameManagement : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		PrintGold();
+        CheckGameState();
 	}
-    
-    
+
+
+    public bool GameEnded;
+    Text SuccessFailure_Message;
+    void CheckGameState()
+    {
+
+        if (PlayerHP == 0)
+        {
+            SuccessFailure_Message.text = "YOU LOST :( ...... \n\n\n\n\n\n\t you noob :)";
+            SuccessFailure_Message.gameObject.SetActive(true);
+            GoldOverTime = 0;
+            Time.timeScale = 0.00f;
+        }
+
+        //else if (CheckGameEnd())
+        //{
+        //    Debug.Log("Game ended");
+        //    SuccessFailure_Message.text="YOU WON ! ! ! ! ! !111111ENA ENA DYO TPIA 4";
+        //    SuccessFailure_Message.gameObject.SetActive(true);
+        //    GoldOverTime = 0;
+        //    Time.timeScale = 0.00f;
+
+        //}
+        
+    }
+
+    bool CheckGameEnd()
+    {
+        int EnemiesLeft=GameObject.FindGameObjectsWithTag("Enemy").Length;
+
+        Debug.Log("Enemyiez");
+
+        if (Wavelogic.GetComponent<WaveLogic>().isLastWave() && EnemiesLeft==0)
+        {
+            return true;
+        }
+        else return false;
+    }
+
+
+
+
     void PrintGold()
     {
         goldText.text=PlayerGold.ToString();

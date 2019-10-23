@@ -87,7 +87,7 @@ public class SlowTower : Tower_Economy
     public override void  Upgrade()
     {
         int GoldCost= getUpgradeCost();
-        if (GoldAndStuff.PlayerGold < GoldCost)
+        if (GoldAndStuff.PlayerGold < GoldCost * CurrentLevel)
         {
             Debug.Log("Not enough money");
             return ;
@@ -98,11 +98,11 @@ public class SlowTower : Tower_Economy
             return ;
         }
 
-        CurrentLevel++;
+        
         slowPercentage=BasicSlow + (MaxSlow - BasicSlow)* ((float)CurrentLevel / (float) maxLevel);
         currentRange = BasicRange + (MaxRange - BasicRange) * ((float)CurrentLevel / (float)maxLevel);
-        Debug.Log("New Slow : "+slowPercentage + "\nNew Range: "+ currentRange);
-        GoldAndStuff.PlayerGold-=GoldCost;
+        GoldAndStuff.PlayerGold-= GoldCost * CurrentLevel;
+        CurrentLevel++;
     }
     
 }
